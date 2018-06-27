@@ -13,7 +13,7 @@ module.exports = function(deployer){
 
 			return deployer.deploy(
 					IcoContract,
-					'0x9F386CcD8A8e7043314902ECE639DE8E2452d731', //Vikas Address-Rinkby(Account1)
+					'0x9F386CcD8A8e7043......', //put Your Wallet Address here from which all contracts will be deployed
 					IcoToken.address,
 					'100000000000000000000000000', // 100000000 Token
 				    '1000', // 1 ETH = 1000 Token

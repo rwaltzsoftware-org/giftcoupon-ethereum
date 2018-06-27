@@ -11,8 +11,8 @@ module.exports =
 		},
     	rinkeby: {
 		    provider: function() {
-		      var mnemonic = 'snap call clerk burger farm wash pistol easy chronic embrace feature erosion';	
-		      return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/8U0AE4DUGSh8lVO3zmma");
+		      var mnemonic = 'snap call clerk .... '; //put ETH wallet 12 mnemonic code	
+		      return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/<API_KEY_HERE>"); // update your infura rinkeby network API Key
 		    },
 		    network_id: '4',
 		}  
