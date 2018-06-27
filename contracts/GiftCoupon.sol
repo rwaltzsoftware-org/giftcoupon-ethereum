@@ -12,6 +12,9 @@ contract GiftCoupon {
 
 	address owner;
 	uint256 allowanceCost;
+	uint256 decimalFactor;
+	
+	uint256 public RedeemableCost;
 
 	struct Coupon
 	{		
@@ -19,14 +22,17 @@ contract GiftCoupon {
 		uint256 validity;					
 		address creator;
 		string couponTitle;
-		address redeemedBy; 		
+		address redeemedBy;
 	}
 	
-	constructor(address _icoToken,address _icoContract) public 
+	constructor(address _icoToken) public 
 	{
 	    icoTokenObj = IcoToken(_icoToken);
-	    icoContractObj = IcoContract(_icoContract);
 	    owner = msg.sender;
+	    
+	    /* decimal factor */
+	    uint256 decimals = icoTokenObj.decimals();
+	    decimalFactor = 10 ** decimals;
 	}
 	
 	modifier onlyAdmin()
@@ -35,10 +41,9 @@ contract GiftCoupon {
 	    _;
 	}
 	
-	function setIcoTokenInstance(address _icoToken, address _icoContract) private onlyAdmin 
+	function setIcoTokenInstance(address _icoToken) private onlyAdmin 
 	{
 	    icoTokenObj = IcoToken(_icoToken);
-	    icoContractObj = IcoContract(_icoContract); 
 	}
 
 	mapping(uint32 => Coupon) CouponCode; 
@@ -54,11 +59,11 @@ contract GiftCoupon {
     {
       
 		/*  Get exchange rate from IcoContract and convert new token cost into decimal */
-		uint256 exchangeRate = icoContractObj.tokenExchangeRate();
+	
 		uint256 newTokenCost = _cost.mul(_noOfCoupon);
 		
 		/* multiply new token cost with exchange rate to get decimal cost*/
-        uint tokenCostInDecimal = exchangeRate.mul(newTokenCost);
+        uint tokenCostInDecimal = decimalFactor.mul(newTokenCost);
         
 		/* get allowance cost of constract*/
 		allowanceCost = icoTokenObj.allowance(msg.sender,address(this));
@@ -73,7 +78,7 @@ contract GiftCoupon {
         {
             	couponObj.creator = msg.sender;
         		couponObj.couponTitle = _title;
-        		couponObj.rewardCost = _cost.mul(exchangeRate);
+        		couponObj.rewardCost = _cost.mul(decimalFactor);
         		couponObj.validity = _validity;
         		couponObj.redeemedBy = address(0); // store address 0x000 initially before redeem 
         		/* Generate Random String Coupon code */
@@ -89,13 +94,28 @@ contract GiftCoupon {
 		emit couponGift(_cost, _validity, msg.sender, _title, _noOfCoupon);
 	}
 	
-	function getGiftCouponCodes() public view onlyAdmin returns ( uint[]){
+    function getGiftCouponDetails(uint32 _couponCode) public view returns( string title,uint256 cost,  uint256 validity, uint256 code, address creator, address redeemedBy)
+    {
+        Coupon storage getStructValue = CouponCode[_couponCode];
+        
+        title = getStructValue.couponTitle;
+        cost = getStructValue.rewardCost;
+        validity = getStructValue.validity;
+        code = _couponCode;
+        creator = getStructValue.creator;
+        redeemedBy = getStructValue.redeemedBy;
+        
+        return (title, cost, validity, code, creator, redeemedBy);
+    }
+	
+	function getGiftCouponCodes() public view returns ( uint[]){
 	       return UserCouponList[msg.sender];
 	}
 
-	function redeemCoupon(uint32 _couponCode) public returns(uint256)
+	function redeemCoupon(uint32 _couponCode) public returns(bool)
 	{
 		Coupon storage reward = CouponCode[_couponCode];
+		RedeemableCost = reward.rewardCost;
 		/*  Check if rewardCost is not 0 */
         require(reward.rewardCost != 0);
         require(reward.redeemedBy == address(0));
@@ -108,5 +128,7 @@ contract GiftCoupon {
 
 		/* Trigger Event */
 		emit couponRedeemed(msg.sender , _couponCode);
+		
+		return true;
 	}
 }

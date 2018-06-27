@@ -10,6 +10,7 @@ module.exports = function(deployer){
 			'18',
 			'1.0'
 		).then(() => {
+
 			return deployer.deploy(
 					IcoContract,
 					'0x9F386CcD8A8e7043314902ECE639DE8E2452d731', //Vikas Address-Rinkby(Account1)
@@ -19,14 +20,16 @@ module.exports = function(deployer){
 				    '1514764800', // 01/01/2018
 				    '1546214400', // 31/12/2018
 				    '100000000000000000' // 0.1 ETH
-				).then(() => {						
-					return IcoToken.deployed(
-							GiftCoupon,
-							IcoToken.address,
-							IcoContract.address
-						).then(function(instance){
-						return instance.setIcoContract(IcoContract.address);	
-					});
-				});
+				)
+		}).then(() => 
+		{	
+			return IcoToken.deployed();	
+		}).then(function(instance){
+
+			instance.setIcoContract(IcoContract.address);
+			return deployer.deploy(
+					GiftCoupon,
+					IcoToken.address					
+				);	
 		});
 };
