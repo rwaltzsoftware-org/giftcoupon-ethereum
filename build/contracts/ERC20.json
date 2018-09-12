@@ -180,9 +180,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.23;\n// ================= ERC20 Token Contract start =========================\n/*\n * ERC20 interface\n * see https://github.com/ethereum/EIPs/issues/20\n */\ncontract ERC20 {\n  uint public totalSupply;\n  function balanceOf(address who) public constant returns (uint);\n  function allowance(address owner, address spender) public constant returns (uint);\n\n  function transfer(address to, uint value) public returns (bool status);\n  function transferFrom(address from, address to, uint value) public returns (bool status);\n  function approve(address spender, uint value) public returns (bool status);\n  event Transfer(address indexed from, address indexed to, uint value);\n  event Approval(address indexed owner, address indexed spender, uint value);\n}",
-  "sourcePath": "/opt/lampp/htdocs/GiftCoupon/contracts/ERC20.sol",
+  "sourcePath": "/var/www/html/giftcoupon-ethereum/contracts/ERC20.sol",
   "ast": {
-    "absolutePath": "/opt/lampp/htdocs/GiftCoupon/contracts/ERC20.sol",
+    "absolutePath": "/var/www/html/giftcoupon-ethereum/contracts/ERC20.sol",
     "exportedSymbols": {
       "ERC20": [
         65
@@ -986,7 +986,7 @@
     "src": "0:766:0"
   },
   "legacyAST": {
-    "absolutePath": "/opt/lampp/htdocs/GiftCoupon/contracts/ERC20.sol",
+    "absolutePath": "/var/www/html/giftcoupon-ethereum/contracts/ERC20.sol",
     "exportedSymbols": {
       "ERC20": [
         65
@@ -1791,9 +1791,9 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.23+commit.124ca40d.Emscripten.clang"
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.0",
-  "updatedAt": "2018-06-25T12:14:51.838Z"
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2018-09-12T04:52:02.860Z"
 }

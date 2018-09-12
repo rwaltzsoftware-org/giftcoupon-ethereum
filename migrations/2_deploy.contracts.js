@@ -13,7 +13,7 @@ module.exports = function(deployer){
 
 			return deployer.deploy(
 					IcoContract,
-					'0x9F386CcD8A8e7043......', //put Your Wallet Address here from which all contracts will be deployed
+					'0xd2e8dbb45a2230ab9d874602d5a742c273bff611', //put Your Wallet Address here from which all contracts will be deployed
 					IcoToken.address,
 					'100000000000000000000000000', // 100000000 Token
 				    '1000', // 1 ETH = 1000 Token
@@ -24,9 +24,9 @@ module.exports = function(deployer){
 		}).then(() => 
 		{	
 			return IcoToken.deployed();	
-		}).then(function(instance){
+		}).then(async function(instance){
 
-			instance.setIcoContract(IcoContract.address);
+			await instance.setIcoContract(IcoContract.address);
 			return deployer.deploy(
 					GiftCoupon,
 					IcoToken.address					
