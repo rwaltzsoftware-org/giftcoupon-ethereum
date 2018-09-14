@@ -40,6 +40,8 @@ git clone https://github.com/imperialsoftech/giftcoupon-ethereum
 cd giftcoupon-ethereum/
 npm install
 cp truffle.js.sample truffle.js
+=======
+
 ```
 
 **Update truffle.js **
