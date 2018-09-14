@@ -38,6 +38,7 @@ and redeeming coupon codes.
 ```
 git clone https://github.com/imperialsoftech/giftcoupon-ethereum
 cd giftcoupon-ethereum/
+npm install
 ```
 
 **Update truffle.js **

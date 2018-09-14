@@ -3,18 +3,14 @@ module.exports =
 {
     networks: 
     {
-	    development: 
-		{
-	   		host: "localhost",
-	   		port: 8545,
-	   		network_id: "*" // Match any network id
-		},
-    	rinkeby: {
+	    rinkeby: {
 		    provider: function() {
-		      var mnemonic = 'snap call clerk .... '; //put ETH wallet 12 mnemonic code	
+		      var mnemonic = 'snap call clerk ...'; //put ETH wallet 12 mnemonic code	
 		      return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/<API_KEY_HERE>"); // update your infura rinkeby network API Key
 		    },
 		    network_id: '4',
+		    gas: 6054449,
+		    gasPrice: 1000000000
 		}  
     }
 };
