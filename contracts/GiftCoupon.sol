@@ -69,7 +69,7 @@ contract GiftCoupon {
 		allowanceCost = icoTokenObj.allowance(msg.sender,address(this));
         
 		/*  Check if Total Coupon Token Value in decimalis Lesser than allowance cost of contract  */
-        require(tokenCostInDecimal < allowanceCost); 
+        require(tokenCostInDecimal <= allowanceCost); 
     
         
         Coupon memory couponObj;
